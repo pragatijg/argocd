@@ -6,8 +6,8 @@ steps:
   id: 'Docker Auth'
   entrypoint: gcloud
   args: ["auth", "configure-docker", "${_LOCATION}-docker.pkg.dev"]
- - name: 'gcr.io/cloud-builders/docker'
- args: ["docker", "run", "-dit", "--name", "apache_httpd_1", "-p", "8080:80", "us-west1-docker.pkg.dev/solution-kit-11/quickstart-docker-build_trigger/apache_httpd"]
+# - name: 'gcr.io/cloud-builders/docker'
+# args: ["docker", "run", "-dit", "--name", "apache_httpd_1", "-p", "8080:80", "us-west1-docker.pkg.dev/solution-kit-11/quickstart-docker-build_trigger/apache_httpd"]
 - name: "gcr.io/cloud-builders/kubectl"
   id: 'Push Image to Cluster'
   args:
