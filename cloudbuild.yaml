@@ -1,0 +1,28 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  id: 'Docker Build'
+  args: ['build', '-t', '${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_IMAGE}', '.']
+- name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
+  id: 'Docker Auth'
+  entrypoint: gcloud
+  args: ["auth", "configure-docker", "${_LOCATION}-docker.pkg.dev"]
+# - name: 'gcr.io/cloud-builders/docker'
+#   args: ["docker", "run", "-dit", "--name", "apache_httpd_1", "-p", "8080:80", "us-central1-docker.pkg.dev/solution-kit-11/quickstart-docker-repos2/apache_httpd"]
+- name: "gcr.io/cloud-builders/kubectl"
+  id: 'Push Image to Cluster'
+  args:
+  - 'run'
+  - '--image'
+  - '${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_IMAGE}'
+  - 'apache-httpd-container2'
+  - '--'
+  - 'bash'  
+  env:
+  - 'CLOUDSDK_COMPUTE_REGION=us-west1'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=pragati-cluster'
+images:
+- '${_LOCATION}-docker.pkg.dev/$PROJECT_ID/${_REPOSITORY}/${_IMAGE}'
+substitutions:
+  _LOCATION: us-west1
+  _REPOSITORY: quickstart-docker-repos2
+  _IMAGE: apache_httpd
