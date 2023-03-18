@@ -7,9 +7,9 @@ spec:
   project: default
 
   source:
-    repoURL: https://github.com/pragatijg/build_trigger
+    repoURL: https://github.com/pragatijg/build_trigger.git
     targetRevision: HEAD
-    path: dev
+    path: 
   destination: 
     server: https://kubernetes.default.svc
     namespace: myapp
